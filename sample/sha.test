@@ -1,0 +1,32 @@
+A Crow, half-dead with thirst, came upon a Pitcher which had
+once been full of water; but when the Crow put its beak into the
+mouth of the Pitcher he found that only very little water was left
+in it, and that he could not reach far enough down to get at it.
+He tried, and he tried, but at last had to give up in despair.
+Then a thought came to him, and he took a pebble and dropped it
+into the Pitcher.  Then he took another pebble and dropped it into
+the Pitcher.  Then he took another pebble and dropped that into
+the Pitcher.  Then he took another pebble and dropped that into
+the Pitcher.  Then he took another pebble and dropped that into
+the Pitcher.  Then he took another pebble and dropped that into
+the Pitcher.  At last, at last, he saw the water mount up near
+him, and after casting in a few more pebbles he was able to quench
+his thirst and save his life.
+
+
+Little by little does the trick.
+__INPUT__
+6ab072e182a2cd21d0d2f644ce19219f47a021802abef342a3cf126c812086e7
+__OUTPUT__
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+__INPUT__
+dabe4ad2e8e13263662b3f9ac30ade7f176ff7cf1efe1afc1fa4d9a21a9976fa
+__OUTPUT__
+abc
+__INPUT__
+ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad
+__OUTPUT__
+abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq
+__INPUT__
+248d6a61d20638b8e5c026930c3e6039a33ce45964ff2167f6ecedd419db06c1
+__OUTPUT__

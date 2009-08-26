@@ -1,0 +1,2 @@
+#!/bin/sh
+exec goruby1.9 $1

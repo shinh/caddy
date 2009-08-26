@@ -1,0 +1,3 @@
+#!/bin/sh
+nkf -e $1 > test.src
+mind test file | nkf

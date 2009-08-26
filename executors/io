@@ -1,0 +1,2 @@
+#!/bin/sh
+exec io_static $1

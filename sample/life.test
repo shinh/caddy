@@ -1,0 +1,157 @@
+24
+  o      o o    oo o  o
+        o            o
+     o        o  o
+   o      o      o  o
+ o  o  o o  oo
+__INPUT__
+o
+o
+o
+__OUTPUT__
+29
+        o    o  o  oo
+   o  o oo   o     o
+   o o           o
+  o o
+o  o  o    o o      o
+    o  o  o
+  o    o o
+    o  oo   o o
+ o     o   o
+    o  o    o      oo
+     o      o    o
+o
+   o o   o    o  o
+ oo        oo     oo
+      o      o   o oo
+  o      o
+
+__INPUT__
+       oo
+ oo   o o
+o  o   o
+ oo
+
+
+
+
+
+
+             oo
+             oo
+__OUTPUT__
+25
+
+o   o
+      o
+       o
+o
+o
+   o
+  o
+    o
+  o   o
+   o
+o    o
+   o  o
+
+o   ooo
+o
+
+__INPUT__
+ oo
+ oo
+ oo
+ oo
+o ooo
+     o
+ oo  oo
+ o     o
+ oooooo
+ o
+ o  o
+  ooo
+__OUTPUT__
+30
+ooo o
+o
+   oo
+ oo o
+o o o
+
+__INPUT__
+     o
+   oo oo
+
+  o
+  ooo o o
+  o  oo oo
+  oo  o  o
+       oo
+   o        o
+  ooo      ooo
+ oooo     o o o
+o         oo
+ooo          oo
+oo   oo      oo
+     o   ooo oo
+ o oo
+  oo     o o
+  o       o
+__OUTPUT__
+201
+   ooo
+   o
+    o
+
+
+ oo
+oo
+  o
+
+__INPUT__
+    o
+   oo
+   o o
+
+
+
+ooo
+o
+ o
+__OUTPUT__
+100
+ oooo
+o   o
+    o
+o  o
+
+
+oo
+oo
+__INPUT__
+                                                   oooo
+                                                  o   o
+                                                      o
+                                                  o  o
+
+
+oo
+oo
+__OUTPUT__
+99
+      o
+oo
+ o   ooo
+
+__INPUT__
+   o
+    o
+   ooo ooo
+   o  o  o
+      o   o
+o      ooo
+o       o
+o o
+__OUTPUT__

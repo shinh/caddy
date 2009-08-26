@@ -1,0 +1,2 @@
+#!/bin/sh
+exec z80golf $1

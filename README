@@ -1,0 +1,174 @@
+caddy - a testing/squeezing/submission helper tool for golfers
+
+* setup
+
+Add alias to your .bashrc or something:
+
+ alias caddy='ruby ~/src/gtester/caddy.rb'
+
+Run caddy update:
+
+ % caddy update
+
+This command downloads the problem information in golf.shinh.org.
+Please run this command again if another challenge is added in
+golf.shinh.org. Note that you will be asked your name for submission
+if this is the first run.
+
+If you use Debian or Ubuntu, you can install language environments by
+
+ % caddy install_apt
+
+* basic usage
+
+For example, suppose you have a solution of delete words
+(http://golf.shinh.org/p.rb?delete+words) as "delword.rb". You should
+specify the file name as commandline argument:
+
+ % caddy delword.rb
+
+Then you may see
+
+ delword corresponds to
+  0: none of below
+  1: delete words (4166)
+  2: hello world (4545)
+  3: Ring world (6000)
+  4: Factorial (7777)
+  5: odd lines (7777)
+ Input 0-5 [1] ? :
+
+In this case, this program guesses the name of problem correctly. Just
+type return. you will see local testing and squeezing.
+
+ Loading testcases of 'delete words'
+ Test #1... OK
+ Test #2... OK
+ Test #3... OK
+ 
+ Running squeezer... 669 => 80
+ #!ruby -pa
+ gets(c=" "*-~~b=/.$/).map{sub$F[0],c;gsub(/.+/){scan(b)-[gsub b,""]}}
+ 
+ Test #1... OK
+ Test #2... OK
+ Test #3... OK
+ 
+ Submit this 80B code as shinh (Y/n) ? :
+
+Here, you are asked if you want to submit this code to the golf
+server. After you type return again, you will see
+
+ Submitting... Success!
+
+That's all of the basic usage.
+
+* tell the name of challenge explicitly
+
+I had the solution of "sort characters" challenge as "csort.rb".
+
+ % caddy csort.rb
+ csort corresponds to
+  0: none of below
+  1: Factorial (6666)
+  2: Card Sharp (7000)
+  3: Circle Art (7000)
+  4: Timeout (7142)
+  5: factoriazation (7142)
+ Input 0-5 [1] ? :
+
+Now, the system couldn't guess the challenge name correctly. You
+should tell the name of problem to caddy as follows:
+
+ % caddy csort.rb 'http://golf.shinh.org/p.rb?sort+characters'
+
+Once the system learn the correct relation, you should not specify the
+URL explicitly.
+
+* configuration
+
+You have your configuration in $HOME/.golf/config.rb. Maybe you see
+how to modify this file easily.
+
+caddy has some command line flags. Please check these option by
+invoking the program with no arguments:
+
+ % caddy
+
+* add/modify squeezer
+
+Squeezer removes comments and unnecessary white spaces. For example,
+the following ruby code
+
+ # FizzBuzz
+ 1.upto(?d){|n|
+   puts ["Fizz#{s=[:Buzz][n%5]}"][n%3]||s||n
+ }
+
+is squeezed into
+
+ 1.upto(?d){|n|puts ["Fizz#{s=[:Buzz][n%5]}"][n%3]||s||n}
+
+With squeezer, you can write relatively readable code for golfing. Now
+we don't have squeezers for all languages. You can add/modify the
+squeezing algorithm. Please check squeeze.rb and squeezer/* for
+detail. If you write nice squeezer for your favorite language, please
+send me the code, and I'll add the squeezer into the package.
+
+* add your own testcases
+
+If you prepare testcases file, caddy can be used for other golf
+challenges (e.g. http://codegolf.com/). Suppose you have the solution
+of "99 bottles of beer" (http://codegolf.com/99-bottles-of-beer) as
+"bottle.rb". In this case, caddy checks if there is a file
+"bottle.test" in the current directory. If it exists, caddy extracts
+testcases from the file. Please check sample/* for the format of the
+testcase file.
+
+There is another format of testcases. If there are files named
+test/bottle*.output and test/bottle*.input (*.input is optional),
+caddy extracts testcases from these files. The sample if in cg/*.
+And, if you use the same naming convention as mine, you can use cg/*
+to test your solutions for codegolf.com. Note that the files under cg/
+are incomplete.
+
+* modify executors
+
+You can change how to execute source code by modifying files under
+executors. For example, if the name of your ruby executable is
+not "ruby" but "ruby1.8", you can modify executors/rb as follows:
+
+ #!/bin/sh
+ exec ruby1.8 $1
+
+* uninstall
+
+Remove ~/.golf.
+
+* todos
+
+- add better test cases for codegolf.com
+- add submitter for codegolf.com
+- add more squeezers
+- check if caddy works on cygwin
+- remember other todos.
+
+* thanks
+
+caddy uses net/http/multipart:
+
+http://sieben.dip.jp/hikifarm/Laboratory/?net%2Fhttp%2Fmultipart.rb
+
+* licence
+
+GPLv2 or later.
+
+* change log
+
+- add -s1 and -s2 and -i option. (apparently, i must rename flags)
+- change name of files stored in ~/.golf/code. (thanks for irori)
+- initial release
+
+------------------
+ shinichiro.h
+  shinichiro.hamaji _at_ gmail.com

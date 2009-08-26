@@ -1,0 +1,5 @@
+#!/bin/sh
+b=`basename $1 .di`
+mv $1 $b.d
+exec dmd -c -ofa.out $b.d
+

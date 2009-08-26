@@ -1,0 +1,9 @@
+#!/bin/sh
+set -ex
+svn ci -m ci
+rm -fr caddy
+svn export $SVN/gtest caddy > /dev/null
+rm -f caddy/mkpack
+tar -cvzf caddy.tgz caddy > /dev/null
+scp caddy.tgz i@shinh.org:wrk/sag
+

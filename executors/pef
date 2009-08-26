@@ -1,0 +1,2 @@
+#!/bin/sh
+exec 2dpi.rb $1
