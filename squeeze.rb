@@ -31,7 +31,7 @@ class Squeezer
   end
 
   def caml
-    @src.gsub!(/\(\*.*?\*\)/, '')
+    @src.gsub!(/\(\*.*?\*\)/m, '')
   end
 
   def blank
