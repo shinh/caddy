@@ -27,7 +27,7 @@ class Squeezer
   end
 
   def hs
-    @src.gsub(/ *--.*/, '')
+    @src.gsub!(/ *--.*/, '')
   end
 
   def caml
