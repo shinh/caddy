@@ -17,7 +17,7 @@ class Squeezer
 
   def c99
     @src.gsub!(/ *\/\/.*/, '')
-    @src.gsub!(/\/\*.*?\*\//, '')
+    @src.gsub!(/\/\*.*?\*\//m, '')
   end
 
   def d
