@@ -42,6 +42,7 @@ Options:
  -r : remote test only
  -s1: skip pre-squeezing test
  -s2: skip post-squeezing test
+ -sq: squeezing only
  -i : run all process ignoring errors
  -n : skip squeezing
  -s : suppress stderr
@@ -71,6 +72,7 @@ do_remote = true
 do_squeeze = true
 user_suffix = nil
 ignore_errors = false
+squeeze_only = false
 
 argn = 0
 while opt = ARGV[argn]
@@ -84,6 +86,8 @@ while opt = ARGV[argn]
       do_local1 = false
     when '-s2'
       do_local2 = false
+    when '-sq'
+      squeeze_only = true
     when '-n'
       do_squeeze = false
     when '-i'
@@ -121,6 +125,11 @@ when nil
 else
   filename = ARGV[0]
   problem = ARGV[1]
+
+  if squeeze_only
+    squeezed, code_size = squeeze(filename)
+    exit(0)
+  end
 
   if problem && problem !~ /^http:/
     puts "Problem must be a URL"
