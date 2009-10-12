@@ -1,3 +1,11 @@
+if !String.method_defined?(:ord)
+  class String
+    def ord
+      self[0]
+    end
+  end
+end
+
 def get_statistics(s)
   a=[0,0,0,0]
   an=/[a-zA-Z0-9]/
@@ -111,10 +119,10 @@ class Squeezer
     puts "#{@orig_size} => #{@src.size} (#{get_statistics(@src)})"
     if @ext == '.z8b'
       system("z80dasm -a -t -g0 #{squeezed} 2>-")
-    elsif @ext != '.out'
-      system("objdump -b binary -m i386 #{squeezed} 2>-")
+    elsif @ext == '.out'
+      system("objdump -b binary -m i386 #{squeezed} 2>&-")
     else
-      puts @src
+      puts @src.gsub(/[\x00-\x09\x0b-\x1f\x7f-\xff]/){'\\x%x'%$&.ord}
     end
     puts
 
