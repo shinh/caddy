@@ -1,5 +1,17 @@
 require 'net/http'
-require 'yaml'
+
+def initialize_db_module
+  begin
+    require 'json'
+    $SERIALIZER = JSON
+    $DATA_PATH = 'jsonp'
+  rescue
+    STDERR.puts 'No json module installed. We\'ll use YAML, but please consider installing json module as there are known bugs in YAML loader.'
+    require 'yaml'
+    $SERIALIZER = YAML
+    $DATA_PATH = 'yamlp'
+  end
+end
 
 def golf_file(f)
   File.join(GOLF_DIR, f)
@@ -26,10 +38,11 @@ def ag_unescape(url)
 end
 
 def download_ag(http, f)
-  url = ag_escape("/yamlp.rb?#{f[/[^.]+/]}")
+  initialize_db_module
+  url = ag_escape("/#{$DATA_PATH}.rb?#{f[/[^.]+/]}")
   puts "Downloading #{f}..."
   File.open(ag_file(f), 'w') do |ofile|
-    ofile.print Marshal.dump(YAML.load(http.get(url).read_body))
+    ofile.print Marshal.dump($SERIALIZER.load(http.get(url).read_body))
   end
 end
 
