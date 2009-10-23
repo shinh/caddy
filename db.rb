@@ -1,6 +1,10 @@
 require 'net/http'
 
 def initialize_db_module
+  $SERIALIZER = Marshal
+  $DATA_PATH = 'marshalp'
+  return
+
   begin
     require 'json'
     $SERIALIZER = JSON
@@ -42,7 +46,8 @@ def download_ag(http, f)
   url = ag_escape("/#{$DATA_PATH}.rb?#{f[/[^.]+/]}")
   puts "Downloading #{f}..."
   File.open(ag_file(f), 'w') do |ofile|
-    ofile.print Marshal.dump($SERIALIZER.load(http.get(url).read_body))
+    o = $SERIALIZER.load(http.get(url).read_body)
+    ofile.print Marshal.dump(o)
   end
 end
 
