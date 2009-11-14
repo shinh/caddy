@@ -1,0 +1,6 @@
+#!/bin/sh
+ARCH=8
+if [ `uname -m` = "x86_64" ]; then
+   ARCH=6
+fi
+"$ARCH"g -o test."$ARCH" $1 && "$ARCH"l -o a.out test."$ARCH"
