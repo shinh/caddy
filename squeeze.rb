@@ -55,7 +55,7 @@ class Squeezer
   end
 
   def leading_ws
-    @src.gsub!(/^\s+/, '')
+    @src.gsub!(/^[ \t]+/, '')
   end
 
   def any_ret(t)
