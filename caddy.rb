@@ -126,8 +126,17 @@ else
   filename = ARGV[0]
   problem = ARGV[1]
 
+  if !File.exist?(filename)
+    raise "#{filename}: file not found"
+  end
+  ext = File.extname(filename)
+  base = File.basename(filename, ext)
+
   if squeeze_only
     squeezed, code_size = squeeze(filename)
+    if $copy_squeezed
+      FileUtils.cp(squeezed, 'out' + ext)
+    end
     exit(0)
   end
 
@@ -136,11 +145,6 @@ else
     exit(1)
   end
 
-  if !File.exist?(filename)
-    raise "#{filename}: file not found"
-  end
-  ext = File.extname(filename)
-  base = File.basename(filename, ext)
   if ext == '.z8' || ext == '.zasm'
     if !system("z80asm #{filename} -o #{base}.z8b")
       puts "Couldn't compile #{filename}"
