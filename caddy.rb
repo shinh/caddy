@@ -39,7 +39,7 @@ def help
 
 Options:
  -l : local test only
- -r : remote test only
+ -r[times]: remote test only (default times=1)
  -s1: skip pre-squeezing test
  -s2: skip post-squeezing test
  -sq: squeezing only
@@ -68,7 +68,7 @@ end
 
 do_local1 = true
 do_local2 = true
-do_remote = true
+do_remote = 1
 do_squeeze = true
 user_suffix = nil
 ignore_errors = false
@@ -80,8 +80,11 @@ while opt = ARGV[argn]
     case opt
     when '-l'
       do_remote = false
-    when '-r'
+    when /-r(\d*)/
       do_local1 = do_local2 = false
+      if $1 != ''
+        do_remote = $1.to_i
+      end
     when '-s1'
       do_local1 = false
     when '-s2'
@@ -217,24 +220,41 @@ else
       'user' => user,
       'reveal' => $open_code_statistics ? '1' : '',
     }
-    Net::HTTP.start('golf.shinh.org', 80) do |http|
-      req = Net::HTTP::Post.new('/submit.rb')
-      FileUtils.cp(squeezed, tmpfile = File.join('/tmp', base+ext))
-      req.set_multipart_form_data({'file' => tmpfile}, data)
-      File.unlink(tmpfile)
-      res = http.request(req)
-      if res.class.superclass != Net::HTTPSuccess
-        puts "Failed to connect the golf server"
-        exit 1
+
+    ok = false
+    1.upto(do_remote) do |num_attacks|
+      Net::HTTP.start('golf.shinh.org', 80) do |http|
+        req = Net::HTTP::Post.new('/submit.rb')
+        FileUtils.cp(squeezed, tmpfile = File.join('/tmp', base+ext))
+        req.set_multipart_form_data({'file' => tmpfile}, data)
+        File.unlink(tmpfile)
+        res = http.request(req)
+        if res.class.superclass != Net::HTTPSuccess
+          puts "Failed to connect the golf server"
+          exit 1
+        end
+
+        res = res.read_body
+        if res =~ /Success[^<]*/
+          puts $&
+          ok = true
+        else
+          puts 'FAILED'
+          puts
+          puts res.sub(/.*<body>/m, '').gsub(/<.*?>/, '').sub('return top', '')
+        end
       end
 
-      res = res.read_body
-      if res =~ /Success[^<]*/
-        puts $&
-      else
-        puts 'FAILED'
-        puts
-        puts res.sub(/.*<body>/m, '').gsub(/<.*?>/, '').sub('return top', '')
+      if ok
+        break
+      end
+
+      if num_attacks % 100 == 0
+        puts "#{num_attacks}..."
+
+        if num_attacks >= 10000
+          raise 'Please refrain from >10000 attempts'
+        end
       end
     end
   end
