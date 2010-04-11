@@ -75,7 +75,10 @@ def execute(type, filename, testcases)
         if ext == 'sed' && i.empty?
           i = "\n"
         end
-        pipe.write(i) rescue ()
+        begin
+          pipe.write(i)
+        rescue Errno::EPIPE
+        end
         pipe.close_write
         o = pipe.read
         case type
