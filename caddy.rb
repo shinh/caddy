@@ -43,6 +43,7 @@ Options:
  -s1: skip pre-squeezing test
  -s2: skip post-squeezing test
  -sq: squeezing only
+ -e : execute only - don\'t check the results
  -i : run all process ignoring errors
  -n : skip squeezing
  -s : suppress stderr
@@ -73,6 +74,7 @@ do_squeeze = true
 user_suffix = nil
 ignore_errors = false
 squeeze_only = false
+no_check = false
 
 argn = 0
 while opt = ARGV[argn]
@@ -85,6 +87,9 @@ while opt = ARGV[argn]
       if $1 != ''
         do_remote = $1.to_i
       end
+    when '-e'
+      do_remote = false
+      no_check = true
     when '-s1'
       do_local1 = false
     when '-s2'
@@ -171,7 +176,7 @@ else
 
   type, testcases = tests
   if do_local1
-    if !execute(type, filename, testcases)
+    if !execute(type, filename, testcases, no_check)
       puts 'FAILED'
       if !ignore_errors
         exit(1)
@@ -182,7 +187,7 @@ else
   if do_squeeze
     squeezed, code_size = squeeze(filename)
     if do_local2
-      if !execute(type, squeezed, testcases)
+      if !execute(type, squeezed, testcases, no_check)
         puts 'FAILED'
         if !ignore_errors
           exit(1)

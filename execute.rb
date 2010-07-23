@@ -30,7 +30,7 @@ def show_error(expect, output)
   end
 end
 
-def execute(type, filename, testcases)
+def execute(type, filename, testcases, no_check)
   ext = File.extname(filename)[1..-1]
   FileUtils.rm_rf(TEST_DIR)
   FileUtils.mkdir_p(TEST_DIR)
@@ -65,13 +65,21 @@ def execute(type, filename, testcases)
     testcases.each do |i, e|
       i.gsub!("\r\n", "\n")
       e.gsub!("\r\n", "\n")
-      print "Test ##{n+=1}... "
+      if no_check
+        puts "\n=== Test ##{n+=1} ==="
+      else
+        print "Test ##{n+=1}... "
+      end
+      STDOUT.flush
       cmd = "#{executor} '#{testfile}' '#{filename}'"
       if $suppress_stderr
         cmd += ' 2>-'
       end
       start = Time.now
-      IO.popen(cmd, 'r+') do |pipe|
+
+      popen_mode = no_check ? 'w' : 'r+'
+
+      IO.popen(cmd, popen_mode) do |pipe|
         if ext == 'sed' && i.empty?
           i = "\n"
         end
@@ -80,6 +88,11 @@ def execute(type, filename, testcases)
         rescue Errno::EPIPE
         end
         pipe.close_write
+
+        if no_check
+          break
+        end
+
         o = pipe.read
         case type
         when :ag
