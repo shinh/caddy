@@ -52,6 +52,7 @@ Options:
  -dd: change diff style to 'diff'
  -da: change diff style to 'all'
  -u [suffix]: add user suffix (e.g. sym)
+ -ex [executor]: specify executor
 )
   exit 0
 end
@@ -112,6 +113,9 @@ while opt = ARGV[argn]
       $diff_style = :all
     when '-u'
       user_suffix = ARGV[argn+1]
+      ARGV.delete_at(argn)
+    when '-ex'
+      $executor = ARGV[argn+1]
       ARGV.delete_at(argn)
     else
       puts "Unknown option: #{opt}"

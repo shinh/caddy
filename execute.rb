@@ -56,7 +56,8 @@ def execute(type, filename, testcases, no_check)
       end
     end
 
-    if (!File.exist?(executor = File.join(GOLF_DIR, 'executors', ext)) &&
+    if (!(executor = $executor) &&
+        !File.exist?(executor = File.join(GOLF_DIR, 'executors', ext)) &&
         !File.exist?(executor = File.join(SRC_DIR, 'executors', ext)))
       raise "No executor found for #{filename}"
     end
@@ -71,7 +72,8 @@ def execute(type, filename, testcases, no_check)
         print "Test ##{n+=1}... "
       end
       STDOUT.flush
-      cmd = "#{executor} '#{testfile}' '#{filename}'"
+      cmd = "#{executor} '#{testfile}'"
+      cmd += " '#{filename}'" if !$executor
       if $suppress_stderr
         cmd += ' 2>-'
       end
