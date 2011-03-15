@@ -85,17 +85,34 @@ def execute(type, filename, testcases, no_check)
         if ext == 'sed' && i.empty?
           i = "\n"
         end
-        begin
-          pipe.write(i)
-        rescue Errno::EPIPE
+
+        if i.empty?
+          pipe.close_write
         end
-        pipe.close_write
+
+        o = ''
+        while true
+          sel = IO.select([pipe], i.empty? ? [] : [pipe], nil)
+          if sel[0][0]
+            o += pipe.readpartial(4096)
+            break if pipe.eof?
+          end
+          if sel[1][0]
+            begin
+              wb = pipe.write(i[0, 4096])
+              i = i[wb..-1]
+              if i.empty?
+                pipe.close_write
+              end
+            rescue Errno::EPIPE
+            end
+          end
+        end
 
         if no_check
           break
         end
 
-        o = pipe.read
         case type
         when :ag
           e.rstrip!
