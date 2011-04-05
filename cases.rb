@@ -1,12 +1,7 @@
 require 'ed'
 require 'db'
 
-def get_onefile_cases(basename)
-  testfile = basename + '.test'
-  if !File.exist?(testfile)
-    return nil
-  end
-
+def read_onefile_cases(testfile)
   puts "Loading testcases from #{testfile}"
   t = File.read(testfile)
   testcases = []
@@ -18,12 +13,22 @@ def get_onefile_cases(basename)
     o = $1
     testcases << [i, o]
   end
+  [testcases, t]
+end
+
+def get_onefile_cases(basename)
+  testfile = basename + '.test'
+  if !File.exist?(testfile)
+    return nil
+  end
+
+  testcases, t = read_onefile_cases(testfile)
 
   # use codegolf's evaluation by default
   type = :cg
-  if t =~ /ag/
+  if t =~ /ag$/
     type = :ag
-  elsif t =~ /exact/
+  elsif t =~ /exact$/
     type = :exact
   end
 
@@ -74,10 +79,23 @@ def get_ag_cases(basename, problem)
   [:ag, testcases]
 end
 
+def get_spoj_cases(basename)
+  testfile = spoj_file(basename.upcase) + '.test'
+  if !File.exist?(testfile)
+    return nil
+  end
+  testcases, t = read_onefile_cases(testfile)
+  [:spoj, testcases]
+end
+
 def get_testcases(basename, problem)
   if !problem
     r = get_onefile_cases(basename)
     return r if r
+    if $spoj_dir_regexp =~ Dir.pwd
+      r = get_spoj_cases(basename)
+      return r if r
+    end
     r = get_files_cases(File.join('test', basename))
     return r if r
     r = get_files_cases(File.join(SRC_DIR, 'cg', basename))

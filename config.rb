@@ -9,3 +9,6 @@ $submit_confirm = true
 
 # true if you want to get squeezed file in current directory
 $copy_squeezed = false
+
+# regexp to detect spoj directory
+$spoj_dir_regexp = /spoj$/
