@@ -1,6 +1,6 @@
-def confirm_submit(code, user)
+def confirm_submit(code_size, user)
   if $submit_confirm
-    print "Submit this #{code.size}B code as #{user} (Y/n) ? : "
+    print "Submit this #{code_size}B code as #{user} (Y/n) ? : "
     yn = STDIN.gets
     if yn !~ /^$/ && yn !~ /^[yY]$/
       exit 0
@@ -8,13 +8,13 @@ def confirm_submit(code, user)
   end
 end
 
-def submit_ag(base, user_suffix, num_retry, code, ext, pn)
+def submit_ag(base, user_suffix, num_retry, code, ext, pn, code_size)
   user = get_user
   if user_suffix
     user = "#{user}(#{user_suffix})"
   end
 
-  confirm_submit(code, user)
+  confirm_submit(code_size, user)
 
   print 'Submitting... '
   data = {
@@ -115,7 +115,7 @@ SPOJ_LANGS = {
   '.ws' => 6,
 }
 
-def submit_spoj(code, base, ext)
+def submit_spoj(code_file, code_size, base, ext)
   user = get_user
 
   langid = SPOJ_LANGS[ext]
@@ -124,7 +124,7 @@ def submit_spoj(code, base, ext)
     exit 1
   end
 
-  confirm_submit(code, user)
+  confirm_submit(code_size, user)
 
   print 'Submitting... '
 
@@ -139,6 +139,8 @@ def submit_spoj(code, base, ext)
     pass = gets.strip
     system("stty echo")
   end
+
+  code = File.read(code_file)
 
   https = Net::HTTP.new('www.spoj.pl', 443)
   https.use_ssl = true
