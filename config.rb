@@ -12,3 +12,6 @@ $copy_squeezed = false
 
 # regexp to detect spoj directory
 $spoj_dir_regexp = /spoj$/
+
+# password for spoj
+$spoj_pass = nil

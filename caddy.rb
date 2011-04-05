@@ -212,6 +212,11 @@ else
     code_size = File.size(filename)
   end
 
+  if do_remote && $spoj_dir_regexp =~ Dir.pwd
+    submit_spoj(squeezed, base, ext)
+    exit
+  end
+
   problem = file2problem(base, false)
   if do_remote && problem =~ /^http:\/\/golf.shinh.org\/p.rb\?/
     submit_ag(base, user_suffix, do_remote, squeezed, ext, $')
