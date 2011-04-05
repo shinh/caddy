@@ -1,4 +1,5 @@
 require 'net/http'
+require 'open-uri'
 
 def initialize_db_module
   $SERIALIZER = Marshal
@@ -62,6 +63,39 @@ def update_ag
   download_ag(http, 'problem.db')
   ag_problems.each do |f|
     update_ag_db(http, f + '.db')
+  end
+end
+
+def spoj_file(f)
+  File.join(SPOJ_DIR, f)
+end
+
+def update_spoj
+  puts 'Downloading the list of problems...'
+  c = open('http://www.spoj.pl/SHORTEN/ranks/', &:read)
+  c.scan(/<a href='\/SHORTEN\/problems\/(.*?)'>/) do
+    probname = $1
+    filename = spoj_file(probname)
+    if File.exists?(filename + '.html')
+      next
+    end
+
+    puts "Downloading the #{probname}.html..."
+    spec = open("http://www.spoj.pl/SHORTEN/problems/#{probname}/", &:read)
+    File.open(filename + '.html', 'w') do |of|
+      of.print(spec)
+    end
+
+    spec.gsub!(/<br\s*\/>/, "\n")
+    if spec =~ /<pre>[\s\n]*<strong>Input:<\/strong>(.*?)<strong>Output:<\/strong>(.*?)<\/pre>/ms
+      input = $1.strip
+      output = $2.strip
+      File.open(filename + '.test', 'w') do |of|
+        of.puts(input + "\n\n__INPUT__\n" + output + "\n\n__OUTPUT__")
+      end
+    else
+      puts "Example I/O not found"
+    end
   end
 end
 

@@ -15,10 +15,12 @@ GOLF_DIR = File.join(ENV['HOME'], '.golf')
 AG_DIR = File.join(GOLF_DIR, 'ag')
 CODE_DIR = File.join(GOLF_DIR, 'code')
 TEST_DIR = File.join(GOLF_DIR, 'test')
+SPOJ_DIR = File.join(GOLF_DIR, 'spoj')
 
 FileUtils.mkdir_p(GOLF_DIR)
 FileUtils.mkdir_p(AG_DIR)
 FileUtils.mkdir_p(CODE_DIR)
+FileUtils.mkdir_p(SPOJ_DIR)
 
 configfile = File.join(GOLF_DIR, 'config.rb')
 if !File.exist?(configfile)
@@ -130,6 +132,8 @@ end
 case ARGV[0]
 when 'update'
   update_ag
+when 'update_spoj'
+  update_spoj
 when 'install_apt'
   install_apt
 when nil
