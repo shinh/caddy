@@ -73,6 +73,9 @@ end
 def update_spoj
   puts 'Downloading the list of problems...'
   c = open('http://www.spoj.pl/SHORTEN/ranks/', &:read)
+  File.open(spoj_file('ranks.html'), 'w') do |of|
+    of.print(c)
+  end
   c.scan(/<a href='\/SHORTEN\/problems\/(.*?)'>/) do
     probname = $1
     filename = spoj_file(probname)
