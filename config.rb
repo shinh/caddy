@@ -15,3 +15,6 @@ $spoj_dir_regexp = /spoj$/
 
 # password for spoj
 $spoj_pass = nil
+
+# don't use marshal to exchange data
+$dont_use_marshalp = false
