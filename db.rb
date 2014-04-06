@@ -2,15 +2,17 @@ require 'net/http'
 require 'open-uri'
 
 def initialize_db_module
-  $SERIALIZER = Marshal
-  $DATA_PATH = 'marshalp'
-  return
+  if !$dont_use_marshalp
+    $SERIALIZER = Marshal
+    $DATA_PATH = 'marshalp'
+    return
+  end
 
   begin
     require 'json'
     $SERIALIZER = JSON
     $DATA_PATH = 'jsonp'
-  rescue
+  rescue LoadError
     STDERR.puts 'No json module installed. We\'ll use YAML, but please consider installing json module as there are known bugs in YAML loader.'
     require 'yaml'
     $SERIALIZER = YAML
