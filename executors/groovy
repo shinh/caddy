@@ -1,0 +1,2 @@
+#!/bin/sh
+exec groovy $1
