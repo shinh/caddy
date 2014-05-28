@@ -1,3 +1,5 @@
+# -*- coding: binary -*-
+
 if !String.method_defined?(:ord)
   class String
     def ord
