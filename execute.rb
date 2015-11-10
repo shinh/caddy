@@ -94,8 +94,12 @@ def execute(type, filename, testcases, no_check)
         while true
           sel = IO.select([pipe], i.empty? ? [] : [pipe], nil)
           if sel[0][0]
-            o += pipe.readpartial(4096)
-            break if pipe.eof?
+            begin
+              b = pipe.readpartial(4096)
+              o += b
+            rescue
+              break
+            end
           end
           if sel[1][0]
             begin
