@@ -124,7 +124,7 @@ class Squeezer
     elsif @ext == '.out'
       system("objdump -b binary -m i386 #{squeezed} 2>&-")
     else
-      puts @src.gsub(/[\x00-\x09\x0b-\x1f\x7f-\xff]/){'\\x%x'%$&.ord}
+      puts @src.gsub(/[\x00-\x09\x0b-\x1f\x7f-\xff]/n){'\\x%x'%$&.ord}
     end
     puts
 
