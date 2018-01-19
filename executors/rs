@@ -1,8 +1,3 @@
 #!/bin/sh
-<<<<<<< HEAD
 export LANG=C
 exec ./a.out
-=======
-# export LANG=C
-exec rust run "$1"
->>>>>>> Add an executor for Rust-lang.
