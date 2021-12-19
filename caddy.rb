@@ -79,6 +79,7 @@ user_suffix = nil
 ignore_errors = false
 squeeze_only = false
 no_check = false
+use_perf_checker = false
 
 argn = 0
 while opt = ARGV[argn]
@@ -104,6 +105,8 @@ while opt = ARGV[argn]
       do_squeeze = false
     when '-i'
       ignore_errors = true
+    when '-p'
+      use_perf_checker = true
     when '-s'
       $suppress_stderr = true
     when '-c'
@@ -154,6 +157,11 @@ else
     if $copy_squeezed
       FileUtils.cp(squeezed, 'out' + ext)
     end
+    exit(0)
+  end
+
+  if use_perf_checker
+    submit_ag_perf(filename, problem)
     exit(0)
   end
 

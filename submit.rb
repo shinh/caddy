@@ -61,6 +61,28 @@ def submit_ag(base, user_suffix, num_retry, code, ext, pn, code_size)
   end
 end
 
+def submit_ag_perf(filename, input_filename)
+  ext = File.extname(filename)
+  base = File.basename(filename, ext)
+
+  Net::HTTP.start('golf.shinh.org', 80) do |http|
+    req = Net::HTTP::Post.new('/checker.rb')
+    FileUtils.cp(filename, tmpfile = File.join('/tmp', base+ext))
+    input = input_filename ? File.read(input_filename) : ""
+    req.set_multipart_form_data({'file' => tmpfile}, {'input' => input})
+    File.unlink(tmpfile)
+
+    res = http.request(req)
+    if res.class.superclass != Net::HTTPSuccess
+      puts "Failed to connect the golf server"
+      exit 1
+    end
+
+    res = res.read_body
+    puts res
+  end
+end
+
 SPOJ_LANGS = {
   '.adb' => 7,
   '.s' => 13,
