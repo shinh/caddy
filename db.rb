@@ -55,7 +55,7 @@ def download_ag(http, f)
 end
 
 def update_ag_db(http, f)
-  if !File.exists?(ag_file(f))
+  if !File.exist?(ag_file(f))
     download_ag(http, f)
   end
 end
